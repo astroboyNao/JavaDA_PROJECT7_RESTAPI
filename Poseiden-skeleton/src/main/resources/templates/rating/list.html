@@ -10,15 +10,15 @@
 <div class="container">
 	<div class="row">
 		<div class="col-6">
-			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
-			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+			<a sec:authorize="hasRole('ADMIN')" href="/bid/list">Bid List</a>&nbsp;|&nbsp;
+			<a href="/rating/list">Curve Points</a>&nbsp;|&nbsp;
 			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
 			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
-			<a href="/ruleName/list">Rule</a>
+			<a href="/Rule/list">Rule</a>
 		</div>
 		<div class="col-6 text-right">
 			Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
-			<form th:action="@{/app-logout}" method="POST">
+			<form th:action="@{/logout}" method="POST">
 				<input type="submit" value="Logout"/>
 			</form>
 		</div>
@@ -30,15 +30,25 @@
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>MoodysRating</th>
-					<th>SandPRating</th>
-					<th>FitchRating</th>
+					<th>Moodys</th>
+					<th>SandP</th>
+					<th>Fitch</th>
 					<th>Order</th>
 					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all Rating to the table, the Action column will have Edit & Delete buttons -->
+			<tr th:each="rating : ${ratings}">
+				<td style="width: 10%" th:text="${rating.getId()}"></td>
+				<td th:text="${rating.getMoodys()}"></td>
+				<td th:text="${rating.getSandP()}"></td>
+				<td th:text="${rating.getFitch()}"></td>
+				<td th:text="${rating.getOrder()}"></td>
+				<td style="width: 15%" class="text-center">
+					<a th:href="@{/rating/update/{id}(id=${rating.id})}">Edit</a>&nbsp;|&nbsp;
+					<a th:href="@{/rating/delete/{id}(id=${rating.id})}">Delete</a>
+				</td>
+			</tr>
 			</tbody>
 		</table>
 	</div>

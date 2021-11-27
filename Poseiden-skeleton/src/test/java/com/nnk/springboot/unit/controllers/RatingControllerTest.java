@@ -55,7 +55,7 @@ public class RatingControllerTest extends AbstractControllerTest {
 
     @Test
     public void testRatingValidate() throws Exception {
-        Rating rating = new Rating("moodysRating", "sandPRating", "fitchRating", 1);
+        Rating rating = new Rating("0", "1", "2", 1);
         Mockito.when(ratingService.saveOrUpdate(rating)).thenReturn(Arrays.asList(rating));
         mockMvc.perform(
         post("/rating/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).content("moodys=moodysRating&sandP=sandP&fitch=fitch&order=1")
@@ -76,7 +76,7 @@ public class RatingControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateRating() throws Exception {
-        Rating rating = new Rating("moodysRating", "sandPRating", "fitchRating", 1);
+        Rating rating = new Rating("0", "1", "2", 1);
         Mockito.when(ratingService.saveOrUpdate(rating)).thenReturn(Arrays.asList(rating));
         mockMvc.perform(post("/rating/update/1", rating))
                 .andExpect(status().is3xxRedirection())

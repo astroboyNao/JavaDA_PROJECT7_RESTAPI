@@ -73,10 +73,31 @@ public class UserControllerTest extends AbstractControllerTest {
                 "username=username&"+
                 "fullname=fullname&"+
                 "role=role&"+
-                "password=password")
+                "password=Passw0rd!")
         )
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/user/list"));
+    }
+    @Test
+    public void testUserValidateWithWrongPassword() throws Exception {
+        User user = new User();
+        user.setRole("role");
+        user.setFullname("fullName");
+        user.setUsername("userName");
+        user.setPassword("password");
+        Mockito.when(userService.saveOrUpdate(user)).thenReturn(Arrays.asList(user));
+        mockMvc.perform(
+        post("/user/validate")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+            .content(
+                "username=username&"+
+                "fullname=fullname&"+
+                "role=role&"+
+                "password=Password!")
+        )
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(content().string(Matchers.containsString("Password must contain 1 or more digit characters.")))
+        .andExpect(view().name("user/add"));
     }
 
     @Test
@@ -109,7 +130,7 @@ public class UserControllerTest extends AbstractControllerTest {
                         "username=username&"+
                                 "fullname=fullname&"+
                                 "role=role&"+
-                                "password=password")
+                                "password=Passw0rd!")
                 )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/user/list"));

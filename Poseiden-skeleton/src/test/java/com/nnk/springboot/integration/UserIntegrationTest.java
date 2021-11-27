@@ -1,17 +1,12 @@
 package com.nnk.springboot.integration;
+
 import com.nnk.springboot.TestApplicationConfig;
-import com.nnk.springboot.config.security.JwtTokenUtil;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.services.impl.AuthenticationUserDetailService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -53,7 +48,6 @@ public class UserIntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization" , "Bearer "+ token);
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(headers);
-        System.out.println(token);
         return restBuilder
                 .additionalInterceptors((ClientHttpRequestInterceptor) (request, body, execution) -> {
                     request.getHeaders().add("Authorization", "Bearer " + token);
@@ -61,16 +55,34 @@ public class UserIntegrationTest {
                 }).build();
     }
 
+    public RestTemplate getAdminRestTemplate() throws Exception  {
+        final String baseUrl = "http://localhost:"+port+"/authenticate";
+        URI uriAuthenticate = new URI(baseUrl);
+
+        User user = new User();
+        user.setPassword("test");
+        user.setUsername("adminname");
+
+        String token = this.restTemplate.postForObject(uriAuthenticate, user, String.class);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization" , "Bearer "+ token);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(headers);
+        return restBuilder
+                .additionalInterceptors((ClientHttpRequestInterceptor) (request, body, execution) -> {
+                    request.getHeaders().add("Authorization", "Bearer " + token);
+                    return execution.execute(request, body);
+                }).build();
+    }
     @Test
     @Sql({"/schema.sql", "/user-data.sql"})
     public void testList() throws Exception {
         final String baseUrl = "http://localhost:"+port+"/user/list/";
         URI uri = new URI(baseUrl);
-
-        ResponseEntity<String> result = getUserRestTemplate().getForEntity(uri, String.class);
+        ResponseEntity<String> result = getAdminRestTemplate().getForEntity(uri, String.class);
         Assert.assertEquals(200, result.getStatusCodeValue());
-        Assert.assertEquals(true, result.getBody().contains("<td style=\"width: 10%\">name1</td>"));
-        Assert.assertEquals(true, result.getBody().contains("<td style=\"width: 10%\">name2</td>"));
+        Assert.assertEquals(true, result.getBody().contains("<td style=\"width: 10%\">1</td>"));
+        Assert.assertEquals(true, result.getBody().contains("<td style=\"width: 10%\">2</td>"));
     }
 
     @Test
@@ -83,13 +95,12 @@ public class UserIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> params= new LinkedMultiValueMap<>();
         params.add("username", "username");
-        params.add("password", "password");
+        params.add("password", "Passw0rd%21");
         params.add("fullname", "fullname");
         params.add("role","role");
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
-        ResponseEntity<String> result = getUserRestTemplate().postForEntity(uri, requestEntity, String.class);
-
+        ResponseEntity<String> result = getAdminRestTemplate().postForEntity(uri, requestEntity, String.class);
         Assert.assertEquals(302, result.getStatusCodeValue());
         Assert.assertEquals(true, result.getHeaders().get("Location").toString().contains("user/list"));
 
@@ -100,27 +111,27 @@ public class UserIntegrationTest {
     public void testGetUpdateRule() throws Exception {
         final String baseUrl = "http://localhost:"+port+"/user/update/1";
         URI uri = new URI(baseUrl);
-        ResponseEntity<String> result = getUserRestTemplate().getForEntity(uri, String.class);
+        ResponseEntity<String> result = getAdminRestTemplate().getForEntity(uri, String.class);
 
         Assert.assertEquals(200, result.getStatusCodeValue());
     }
 
     @Test
     @Sql({"/schema.sql", "/user-data.sql"})
-    public void testUpdateRule() throws Exception {
+    public void testUpdateUser() throws Exception {
         final String baseUrl = "http://localhost:"+port+"/user/update/1";
         URI uri = new URI(baseUrl);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> params= new LinkedMultiValueMap<>();
         params.add("username", "username");
-        params.add("password", "password");
+        params.add("password", "Passw0rd%21");
         params.add("fullname", "fullname");
         params.add("role","role");
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
-        ResponseEntity<String> result = getUserRestTemplate().postForEntity(uri, requestEntity, String.class);
+        ResponseEntity<String> result = getAdminRestTemplate().postForEntity(uri, requestEntity, String.class);
 
         Assert.assertEquals(302, result.getStatusCodeValue());
         Assert.assertEquals(true, result.getHeaders().get("Location").toString().contains("user/list"));
@@ -131,7 +142,7 @@ public class UserIntegrationTest {
     public void testDeleteRule() throws Exception {
         final String baseUrl = "http://localhost:"+port+"/user/delete/1";
         URI uri = new URI(baseUrl);
-        ResponseEntity<String> result = getUserRestTemplate().getForEntity(uri, String.class);
+        ResponseEntity<String> result = getAdminRestTemplate().getForEntity(uri, String.class);
 
         Assert.assertEquals(200, result.getStatusCodeValue());
     }

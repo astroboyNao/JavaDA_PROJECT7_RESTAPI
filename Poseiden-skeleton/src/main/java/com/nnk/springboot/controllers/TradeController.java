@@ -1,8 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Rule;
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.services.RuleService;
 import com.nnk.springboot.services.TradeService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;

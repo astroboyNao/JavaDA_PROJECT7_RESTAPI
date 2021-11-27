@@ -1,11 +1,8 @@
 package com.nnk.springboot.services.impl;
 
 import com.nnk.springboot.domain.Bid;
-import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.BidRepository;
-import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.services.BidService;
-import com.nnk.springboot.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

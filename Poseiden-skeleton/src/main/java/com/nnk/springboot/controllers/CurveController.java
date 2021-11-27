@@ -37,7 +37,7 @@ public class CurveController {
      * @param model the model
      * @return the string
      */
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @RequestMapping("/curvepoint/list")
     public String list(Model model)
     {
@@ -52,7 +52,7 @@ public class CurveController {
      * @param curvePoint the curve point
      * @return the string
      */
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @GetMapping("/curvepoint/add")
     public String addCurvePoint(CurvePoint curvePoint) {
         return "curvepoint/add";
@@ -66,7 +66,7 @@ public class CurveController {
      * @param model      the model
      * @return the string
      */
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @PostMapping("/curvepoint/validate")
     public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
         logger.info("validate curvePoint");
@@ -89,7 +89,7 @@ public class CurveController {
      * @param model the model
      * @return the string
      */
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @GetMapping("/curvepoint/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("find curvePoint by id {}", id);
@@ -106,7 +106,7 @@ public class CurveController {
      * @param model      the model
      * @return the string
      */
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @PostMapping("/curvepoint/update/{id}")
     public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
                              BindingResult result, Model model) {
@@ -126,7 +126,7 @@ public class CurveController {
      * @param model the model
      * @return the string
      */
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @GetMapping("/curvepoint/delete/{id}")
     public String deleteCurvePoint(@PathVariable("id") Integer id, Model model) {
         logger.info("delete curvePoint by Id {}", id);

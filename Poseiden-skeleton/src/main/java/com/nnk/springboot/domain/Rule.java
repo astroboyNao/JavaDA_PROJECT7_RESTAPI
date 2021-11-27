@@ -1,11 +1,10 @@
 package com.nnk.springboot.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Rule")

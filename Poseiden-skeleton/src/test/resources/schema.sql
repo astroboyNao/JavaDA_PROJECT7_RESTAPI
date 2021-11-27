@@ -95,5 +95,3 @@ CREATE TABLE Users (
 
                        PRIMARY KEY (Id)
 );
-insert into Users(id,fullname, username, password, role) values(1,'Administrator', 'adminname', '$2a$10$WcKH1lUm0pth4xOdAvLlI.zHBT2vTegsxL.829nIir4RmkiTIYvT6', 'ROLE_ADMIN');
-insert into Users(id,fullname, username, password, role) values(2,'User', 'username', '$2a$10$WcKH1lUm0pth4xOdAvLlI.zHBT2vTegsxL.829nIir4RmkiTIYvT6', 'ROLE_USER');

@@ -1,7 +1,8 @@
 package com.nnk.springboot.domain;
 
 import com.nnk.springboot.validator.ValidPassword;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

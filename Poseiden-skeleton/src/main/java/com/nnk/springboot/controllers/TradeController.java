@@ -1,12 +1,11 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Rule;
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.services.RuleService;
 import com.nnk.springboot.services.TradeService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +32,7 @@ public class TradeController {
      * @param model the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @RequestMapping("/trade/list")
     public String home(Model model)
     {
@@ -47,6 +47,7 @@ public class TradeController {
      * @param trade the trade
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @GetMapping("/trade/add")
     public String addUser(Trade trade) {
         return "trade/add";
@@ -60,6 +61,7 @@ public class TradeController {
      * @param model  the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
         logger.info("validate trade");
@@ -82,6 +84,7 @@ public class TradeController {
      * @param model the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("find trade by id {}", id);
@@ -98,6 +101,7 @@ public class TradeController {
      * @param model  the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @PostMapping("/trade/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
                              BindingResult result, Model model) {
@@ -117,6 +121,7 @@ public class TradeController {
      * @param model the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
         logger.info("delete trade by Id {}", id);

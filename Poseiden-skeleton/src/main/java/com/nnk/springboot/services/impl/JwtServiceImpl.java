@@ -4,7 +4,6 @@ import com.nnk.springboot.config.security.JwtTokenUtil;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.services.JwtService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;

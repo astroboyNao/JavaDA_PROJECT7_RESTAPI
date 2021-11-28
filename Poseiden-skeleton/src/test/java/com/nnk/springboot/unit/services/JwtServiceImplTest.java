@@ -2,8 +2,6 @@ package com.nnk.springboot.unit.services;
 
 import com.nnk.springboot.config.security.JwtTokenUtil;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.BidRepository;
-import com.nnk.springboot.services.impl.BidServiceImpl;
 import com.nnk.springboot.services.impl.JwtServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,10 +1,7 @@
 package com.nnk.springboot.services.impl;
 
-import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.TradeRepository;
 import com.nnk.springboot.repositories.UserRepository;
-import com.nnk.springboot.services.TradeService;
 import com.nnk.springboot.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;

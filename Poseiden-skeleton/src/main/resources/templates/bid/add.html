@@ -14,12 +14,12 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/templates/bid/validate}" th:object="${bid}" method="post" class="form-horizontal" style="width: 100%">
+		<form action="#" th:action="@{/bid/validate}" th:object="${bid}" method="post" class="form-horizontal" style="width: 100%">
 			<div class="form-group">
 				<label for="account" class="col-sm-2 control-label">Account</label>
 				<div class="col-sm-10">
 					<input type="text" th:field="*{account}" id="account" placeholder="Account" class="col-4">
-					<p class="text-danger" th:if="${#fields.hasErrors('account')}" th:errors="*{fullname}"></p>
+					<p class="text-danger" th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></p>
 				</div>
 			</div>
 			<div class="form-group">
@@ -33,8 +33,14 @@
 			<div class="form-group">
 				<label for="bidQuantity" class="col-sm-2 control-label">Bid Quantity</label>
 				<div class="col-sm-10">
-					<input type="text" th:field="*{bidQuantity}" id="bidQuantity" placeholder="Bid Quantity" class="col-4">
-					<p class="text-danger" th:if="${#fields.hasErrors('bidQuantity')}" th:errors="*{username}"></p>
+					<input type="number" step="any" th:field="*{bidQuantity}" id="bidQuantity" placeholder="Bid Quantity" class="col-4">
+					<p class="text-danger" th:if="${#fields.hasErrors('bidQuantity')}" th:errors="*{bidQuantity}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<a class="btn btn-danger btn-sm" href="/bid/list">Cancel</a>
+					<input class="btn btn-primary btn-sm" type="submit" value="Add Bid">
 				</div>
 			</div>
 		</form>

@@ -5,6 +5,7 @@ import com.nnk.springboot.services.RuleService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,7 @@ public class RuleController {
      * @param model the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @RequestMapping("/rule/list")
     public String home(Model model)
     {
@@ -45,6 +47,7 @@ public class RuleController {
      * @param rule the rule
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @GetMapping("/rule/add")
     public String addRuleForm(Rule rule) {
         return "rule/add";
@@ -58,6 +61,7 @@ public class RuleController {
      * @param model  the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @PostMapping("/rule/validate")
     public String validate(@Valid Rule rule, BindingResult result, Model model) {
         logger.info("validate rule");
@@ -80,6 +84,7 @@ public class RuleController {
      * @param model the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @GetMapping("/rule/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("find rule by id {}", id);
@@ -96,6 +101,7 @@ public class RuleController {
      * @param model  the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @PostMapping("/rule/update/{id}")
     public String updateRule(@PathVariable("id") Integer id, @Valid Rule rule,
                              BindingResult result, Model model) {
@@ -115,6 +121,7 @@ public class RuleController {
      * @param model the model
      * @return the string
      */
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     @GetMapping("/rule/delete/{id}")
     public String deleteRule(@PathVariable("id") Integer id, Model model) {
         logger.info("delete rule by Id {}", id);

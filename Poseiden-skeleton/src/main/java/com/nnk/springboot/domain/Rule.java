@@ -1,10 +1,10 @@
 package com.nnk.springboot.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Rule")
@@ -14,11 +14,17 @@ public class Rule {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
+    @Size(max = 125)
     private String name;
+    @Size(max = 125)
     private String description;
+    @Size(max = 125)
     private String json;
+    @Size(max = 512)
     private String template;
+    @Size(max = 125)
     private String sqlStr;
+    @Size(max = 125)
     private String sqlPart;
 
     public Rule(String name, String description, String json, String template, String sqlStr, String sqlPart) {

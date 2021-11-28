@@ -1,6 +1,5 @@
 package com.nnk.springboot.services.impl;
 
-import com.nnk.springboot.domain.Rule;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
 import com.nnk.springboot.services.TradeService;

@@ -1,9 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Bid;
-import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.services.BidService;
-import com.nnk.springboot.services.CurvePointService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

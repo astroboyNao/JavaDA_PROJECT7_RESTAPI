@@ -68,7 +68,7 @@ CREATE TABLE Rating (
                         moodys VARCHAR(125),
                         sandP VARCHAR(125),
                         fitch VARCHAR(125),
-                        order tinyint,
+                        orderName tinyint,
                         PRIMARY KEY (Id)
 );
 

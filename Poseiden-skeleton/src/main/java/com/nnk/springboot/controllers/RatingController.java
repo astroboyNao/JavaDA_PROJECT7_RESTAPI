@@ -1,8 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.services.CurvePointService;
 import com.nnk.springboot.services.RatingService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -35,7 +33,7 @@ public class RatingController {
      * @return the string
      */
     @RequestMapping("/rating/list")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     public String home(Model model)
     {
         logger.info("get list");
@@ -50,7 +48,7 @@ public class RatingController {
      * @return the string
      */
     @GetMapping("/rating/add")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     public String addRatingForm(Rating rating) {
         return "rating/add";
     }
@@ -64,7 +62,7 @@ public class RatingController {
      * @return the string
      */
     @PostMapping("/rating/validate")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
         logger.info("validate rating");
         if (!result.hasErrors()) {
@@ -87,7 +85,7 @@ public class RatingController {
      * @return the string
      */
     @GetMapping("/rating/update/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("find rating by id {}", id);
         model.addAttribute("rating", ratingService.findById(id));
@@ -104,7 +102,7 @@ public class RatingController {
      * @return the string
      */
     @PostMapping("/rating/update/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                              BindingResult result, Model model) {
         logger.info("update rating {}", rating);
@@ -124,7 +122,7 @@ public class RatingController {
      * @return the string
      */
     @GetMapping("/rating/delete/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
         logger.info("delete rating by Id {}", id);
         List<Rating> ratings = ratingService.delete(id);

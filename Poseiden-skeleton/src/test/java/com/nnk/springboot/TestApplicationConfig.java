@@ -1,18 +1,14 @@
 package com.nnk.springboot;
 
-import com.nnk.springboot.config.security.JwtTokenUtil;
-import com.nnk.springboot.config.security.WebSecurityConfig;
-import com.nnk.springboot.filter.JwtRequestFilter;
-import com.nnk.springboot.handler.AppAuthenticationSuccessHandler;
-import com.nnk.springboot.services.impl.AuthenticationUserDetailService;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -34,7 +30,7 @@ public class TestApplicationConfig  {
         UserDetails user = new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+                return Arrays.asList(new SimpleGrantedAuthority("USER"));
             }
 
             @Override
@@ -71,7 +67,7 @@ public class TestApplicationConfig  {
         UserDetails admin = new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                return Arrays.asList(new SimpleGrantedAuthority("ADMIN"));
             }
 
             @Override
@@ -110,5 +106,9 @@ public class TestApplicationConfig  {
         ));
     }
 
+    @Bean
+    GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults(""); // Remove the ROLE_ prefix
+    }
 
 }
